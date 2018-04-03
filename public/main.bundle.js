@@ -602,6 +602,8 @@ module.exports = "<h2 class=\"page-header\">Upload</h2>\n\n<!--<input type=\"fil
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UploadComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_upload_service__ = __webpack_require__("./src/app/services/upload.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__ = __webpack_require__("./node_modules/angular2-flash-messages/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -613,9 +615,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var UploadComponent = (function () {
-    function UploadComponent(uploadService) {
+    function UploadComponent(uploadService, flashMessage) {
         this.uploadService = uploadService;
+        this.flashMessage = flashMessage;
         this.filesToUpload = [];
     }
     UploadComponent.prototype.ngOnInit = function () {
@@ -631,6 +635,16 @@ var UploadComponent = (function () {
         console.log('form data variable :   ' + formData.toString());
         this.uploadService.uploadFiles(formData).subscribe(function (res) {
             console.log(res);
+            if (_this.filesToUpload.length > 0) {
+                _this.flashMessage.show('Article was uploaded sucessfully', {
+                    cssClass: 'alert-success',
+                    timeout: 5000 });
+            }
+            else {
+                _this.flashMessage.show('Select an article to upload', {
+                    cssClass: 'alert-danger',
+                    timeout: 5000 });
+            }
             _this.uploadService.processDocuments().subscribe(function (resp) {
                 console.log(resp);
             });
@@ -645,10 +659,10 @@ var UploadComponent = (function () {
             template: __webpack_require__("./src/app/components/upload/upload.component.html"),
             styles: [__webpack_require__("./src/app/components/upload/upload.component.css")]
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_upload_service__["a" /* UploadService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__services_upload_service__["a" /* UploadService */]) === 'function' && _a) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_upload_service__["a" /* UploadService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__services_upload_service__["a" /* UploadService */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__["FlashMessagesService"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__["FlashMessagesService"]) === 'function' && _b) || Object])
     ], UploadComponent);
     return UploadComponent;
-    var _a;
+    var _a, _b;
 }());
 //# sourceMappingURL=C:/Users/pipe-_000/Desktop/PI2/proyecto/angular-src/src/upload.component.js.map
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UploadService } from '../../services/upload.service';
+import {FlashMessagesService} from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-upload',
@@ -9,7 +10,10 @@ import { UploadService } from '../../services/upload.service';
 export class UploadComponent implements OnInit {
 
   filesToUpload: Array<File> = [];
-  constructor(private uploadService: UploadService) { }
+    constructor(private uploadService: UploadService,
+    private flashMessage:FlashMessagesService
+  
+  ) { }
 
   ngOnInit() {
   }
@@ -26,6 +30,15 @@ export class UploadComponent implements OnInit {
     this.uploadService.uploadFiles(formData).subscribe(
       res => {
         console.log(res);
+        if(this.filesToUpload.length > 0){
+          this.flashMessage.show('Article was uploaded sucessfully', {
+            cssClass: 'alert-success',
+            timeout: 5000});
+        }else{
+          this.flashMessage.show('Select an article to upload', {
+            cssClass: 'alert-danger',
+            timeout: 5000});
+        }
         this.uploadService.processDocuments().subscribe(
           resp => {
             console.log(resp);
