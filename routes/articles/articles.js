@@ -74,15 +74,17 @@ function getBotResponse(message) {
 
 
 router.post('/processDocuments', (req, res) => {
-  initDocumentProcessing();
+  initDocumentProcessing(req.body.files);
   res.send({'successful': 'successful processing'});
 });
 
-function initDocumentProcessing() {
+function initDocumentProcessing(inputFiles) {
   fs.readdir(folder, (err, files) => {
     files.forEach(file => {
-      const data = fs.readFileSync(folder + file, 'utf8');
-      processDocument(data, file);
+      if(inputFiles.includes(file)){
+        const data = fs.readFileSync(folder + file, 'utf8');
+        processDocument(data, file);
+      }      
     });
   })
 }

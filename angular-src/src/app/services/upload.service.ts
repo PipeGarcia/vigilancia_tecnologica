@@ -12,8 +12,8 @@ export class UploadService {
       .map(files => files.json());
   }
 
-  processDocuments() {
-    return this.http.post('/articles/processDocuments', '')
+  processDocuments(filesArray) {
+    return this.http.post('/articles/processDocuments', filesArray)
       .map(files => files.json());
   }
 }

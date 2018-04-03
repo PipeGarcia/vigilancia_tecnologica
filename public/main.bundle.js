@@ -645,13 +645,21 @@ var UploadComponent = (function () {
                     cssClass: 'alert-danger',
                     timeout: 5000 });
             }
-            _this.uploadService.processDocuments().subscribe(function (resp) {
+            var filesArray = { 'files': _this.getFileList() };
+            _this.uploadService.processDocuments(filesArray).subscribe(function (resp) {
                 console.log(resp);
             });
         });
     };
     UploadComponent.prototype.fileChangeEvent = function (fileInput) {
         this.filesToUpload = fileInput.target.files;
+    };
+    UploadComponent.prototype.getFileList = function () {
+        var files = [];
+        for (var i = 0; i < this.filesToUpload.length; i++) {
+            files.push(this.filesToUpload[i].name);
+        }
+        return files;
     };
     UploadComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
@@ -856,8 +864,8 @@ var UploadService = (function () {
         return this.http.post('/articles/fileUpload', formData)
             .map(function (files) { return files.json(); });
     };
-    UploadService.prototype.processDocuments = function () {
-        return this.http.post('/articles/processDocuments', '')
+    UploadService.prototype.processDocuments = function (filesArray) {
+        return this.http.post('/articles/processDocuments', filesArray)
             .map(function (files) { return files.json(); });
     };
     UploadService = __decorate([

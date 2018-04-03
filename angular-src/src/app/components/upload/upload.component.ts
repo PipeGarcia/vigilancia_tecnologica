@@ -30,6 +30,7 @@ export class UploadComponent implements OnInit {
     this.uploadService.uploadFiles(formData).subscribe(
       res => {
         console.log(res);
+
         if(this.filesToUpload.length > 0){
           this.flashMessage.show('Article was uploaded sucessfully', {
             cssClass: 'alert-success',
@@ -39,7 +40,9 @@ export class UploadComponent implements OnInit {
             cssClass: 'alert-danger',
             timeout: 5000});
         }
-        this.uploadService.processDocuments().subscribe(
+
+        const filesArray = {'files': this.getFileList()};
+        this.uploadService.processDocuments(filesArray).subscribe(
           resp => {
             console.log(resp);
           }
@@ -50,6 +53,14 @@ export class UploadComponent implements OnInit {
 
   fileChangeEvent(fileInput: any) {
       this.filesToUpload = <Array<File>>fileInput.target.files;
+  }
+
+  getFileList() {
+    let files = [];
+    for(let i = 0; i < this.filesToUpload.length; i++){
+      files.push(this.filesToUpload[i].name);
+    }
+    return files;
   }
 
 }
