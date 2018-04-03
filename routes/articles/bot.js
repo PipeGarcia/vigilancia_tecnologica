@@ -37,6 +37,39 @@ var json =  [
       "examples": [
         {
           "text": "AI"
+        },
+        {
+          "text": "Artificial Intelligence"
+        },
+        {
+          "text": "Machine Learning"
+        },
+        {
+          "text": "ML"
+        },
+        {
+          "text": "Internet of things"
+        },
+        {
+          "text": "iot"
+        },
+        {
+          "text": "Augmented Reality"
+        },
+        {
+          "text": "AR"
+        },
+        {
+          "text": "Virtual Reality"
+        },
+        {
+          "text": "VR"
+        },
+        {
+          "text": "Robotic"
+        },
+        {
+          "text": "Blockchain"
         }
       ],
       "description": "Le resultó útil la búsqueda?"

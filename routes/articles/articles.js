@@ -30,12 +30,14 @@ var upload = multer({ storage: storage })
 
 router.post('/initChatbot', (req, res) => {
   var words = req.body.mensaje.split(',');
+  var finalWords = [];
+  words.forEach(word => finalWords.push(word.toUpperCase()));
   if(words.length > 1) {
     severalWords = true;
   } else {
     severalWords = false;
   }
-  Article.getArticles(words, (err, data) => {
+  Article.getArticles(finalWords, (err, data) => {
     res.send(
       {
       'botMessage': getBotResponse(req.body.mensaje),
@@ -96,7 +98,7 @@ function processDocument(data, documentName) {
           console.log('error:', err);
       else
           var words = [];
-          response.keywords.forEach(keyword => words.push(keyword.text));
+          response.keywords.forEach(keyword => words.push(keyword.text.toUpperCase()));
           let newArticle = new Article({
             name: documentName,
             keywords: words
@@ -124,7 +126,7 @@ function getParameters(data) {
         'keywords': {
           'emotion': true,
           'sentiment': true,
-          'limit': 5
+          'limit': 10
         }
       }
     }
