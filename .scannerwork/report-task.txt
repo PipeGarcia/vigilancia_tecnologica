@@ -2,5 +2,5 @@ projectKey=Vigtec
 serverUrl=http://localhost:9000
 serverVersion=7.0.0.36138
 dashboardUrl=http://localhost:9000/dashboard/index/Vigtec
-ceTaskId=AWKDh82IcAyFd8wXq8hx
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AWKDh82IcAyFd8wXq8hx
+ceTaskId=AWKMOO3OibZVSDrBUaFs
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AWKMOO3OibZVSDrBUaFs

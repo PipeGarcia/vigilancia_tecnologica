@@ -5,6 +5,7 @@ const multer = require('multer');
 const fs = require("fs");
 const config = require('../../config/database');
 const Article = require('../../models/articles');
+arxiv = require('arxiv');
 
 const NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
 const natural_language_understanding = new NaturalLanguageUnderstandingV1({
@@ -37,14 +38,41 @@ router.post('/initChatbot', (req, res) => {
   } else {
     severalWords = false;
   }
-  Article.getArticles(finalWords, (err, data) => {
+  /*Article.getArticles(finalWords, (err, data) => {
     res.send(
       {
       'botMessage': getBotResponse(req.body.mensaje),
       'query':data
       }
     )
-  })
+  })*/
+
+  search_query = {
+    all: words
+    //author: 'William Chan'
+  };
+
+  arxiv.search(search_query, function(err, results) {
+    console.log('Found ' + results.items.length + ' results out of ' + results.total);
+    console.log(results.items[0].title);
+
+    var data = [];
+    /*results.forEach(item => {
+      data.push(item.title);
+    });*/
+
+    for(var i=0;i<5;i++){
+      data.push(results.items[i].title);
+    }
+
+    res.send(
+      {
+      'botMessage': getBotResponse(req.body.mensaje),
+      'query':data
+      }
+    )
+  });
+
 });
 
 router.post('/fileUpload', upload.array("uploads[]", 12), (req, res) => {

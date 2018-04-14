@@ -169,7 +169,7 @@ module.exports = ""
 /***/ "./src/app/components/dashboard/dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h2 class=\"page-header\">Vigtec</h2>\n<div class=\"center\">\n    <input [(ngModel)]=\"sentMessage\" type=\"text\">\n    <button (click)=\"initChat(sentMessage)\">Send your message</button>  \n</div>\n<ng-container *ngFor = \"let message of messages\">\n    <div class=\"message\" [ngClass]=\"{ 'from': message.sentBy === 'bot',\n                                        'to': message.sentBy === 'user'}\">\n    {{ message.content }}\n    </div>\n</ng-container>\n\n<ol *ngIf=\"query && query.length > 0\" class=\"list\">\n    <li *ngFor = \"let q of query\">\n        {{q.name}} <br> {{q.keywords}}\n    </li>\n</ol>"
+module.exports = "<h2 class=\"page-header\">Vigtec</h2>\n<div class=\"center\">\n    <input [(ngModel)]=\"sentMessage\" type=\"text\">\n    <button (click)=\"initChat(sentMessage)\">Send your message</button>  \n</div>\n<ng-container *ngFor = \"let message of messages\">\n    <div class=\"message\" [ngClass]=\"{ 'from': message.sentBy === 'bot',\n                                        'to': message.sentBy === 'user'}\">\n    {{ message.content }}\n    </div>\n</ng-container>\n\n<ol *ngIf=\"query && query.length > 0\" class=\"list\">\n    <li *ngFor = \"let q of query\">\n        {{q}} <br>\n    </li>\n</ol>"
 
 /***/ }),
 
