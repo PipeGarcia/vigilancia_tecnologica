@@ -13,6 +13,7 @@ export class DashboardComponent implements OnInit {
   receivedMessage = '';
   messages = [];
   query: any;
+  algo: string;
 
   constructor(private chatService: ChatService) { }
 
@@ -24,6 +25,7 @@ export class DashboardComponent implements OnInit {
     this.chatService.initChat(msg).subscribe(
       res => {
         this.query = res.query;
+        this.algo = res.algo;
         this.receivedMessage = res.botMessage;
           this.messages.push({'sentBy': 'user', 'content': this.sentMessage},
             {'sentBy': 'bot', 'content': this.receivedMessage});

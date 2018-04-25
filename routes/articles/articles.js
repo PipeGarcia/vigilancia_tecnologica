@@ -7,6 +7,9 @@ const config = require('../../config/database');
 const Article = require('../../models/articles');
 arxiv = require('arxiv');
 
+var request = require('request');
+let PDFParser = require("pdf2json");
+
 const NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
 const natural_language_understanding = new NaturalLanguageUnderstandingV1({
   'username': 'addceb71-3818-4edf-ab98-745f1e260fa5',
@@ -16,6 +19,8 @@ const natural_language_understanding = new NaturalLanguageUnderstandingV1({
 
 const folder = 'C:/Users/pipe-_000/Desktop/PI2/proyecto/angular-src/uploads/';
 var severalWords = false;
+
+var documentosAnalizados = [];
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -30,6 +35,7 @@ var upload = multer({ storage: storage })
 
 
 router.post('/initChatbot', (req, res) => {
+  documentosAnalizados = [];
   var words = req.body.mensaje.split(',');
   var finalWords = [];
   words.forEach(word => finalWords.push(word.toUpperCase()));
@@ -38,47 +44,80 @@ router.post('/initChatbot', (req, res) => {
   } else {
     severalWords = false;
   }
-  /*Article.getArticles(finalWords, (err, data) => {
-    res.send(
-      {
-      'botMessage': getBotResponse(req.body.mensaje),
-      'query':data
-      }
-    )
-  })*/
 
   search_query = {
     all: words
     //author: 'William Chan'
   };
 
-  arxiv.search(search_query, function(err, results) {
-    console.log('Found ' + results.items.length + ' results out of ' + results.total);
-    console.log(results.items[0].title);
-
-    var data = [];
-    /*results.forEach(item => {
-      data.push(item.title);
-    });*/
-
-    for(var i=0;i<5;i++){
-      data.push(results.items[i].title);
-    }
+  getDocumentsPromise(search_query).then(function(documentosAnalizados) {
 
     res.send(
-      {
-      'botMessage': getBotResponse(req.body.mensaje),
-      'query':data
+      {    
+        'botMessage': getBotResponse(req.body.mensaje),    
+        'query': documentosAnalizados,    
+        'algo': 'algo'    
       }
     )
+    
   });
 
 });
 
+  function getDocumentsPromise(search_query) {
+    return new Promise(function(resolve, reject) {
+      arxiv.search(search_query, function(err, results) {
+    
+        var data = [];
+
+        if(results.items.length != 0){
+          for(var i=0; i<2; i++) {
+    
+            let pdfParser = new PDFParser(this, 1);
+            var options = {
+              url: results.items[i].links[1].href,
+              headers: {
+                  'Referer': 'https://arxiv.org',
+                  'User-Agent': 'request'
+              }
+            }
+
+            console.log(options.url);
+            request(options).pipe(pdfParser);
+            var contenido;
+      
+            pdfParser.on("pdfParser_dataError", errData => console.error(errData.parserError) );
+            pdfParser.on("pdfParser_dataReady", pdfData => {
+                    //fs.writeFile("./resultado.txt", pdfParser.getRawTextContent());
+                contenido = pdfParser.getRawTextContent();
+                
+                var parameters = getParameters(contenido);
+                natural_language_understanding.analyze(parameters, function(err, response) {
+                  if (err)
+                      console.log('error:', err);
+                  else
+                      var words = [];
+                      //console.log(response);
+                      response.keywords.forEach(keyword => words.push(keyword.text.toUpperCase()));
+                      documentosAnalizados.push({
+                        'nombreDocumento': results.items[i].title, 
+                        'palabrasClaves':words
+                      });
+                      //console.log(documentosAnalizados);
+                      if(documentosAnalizados.length == 2) {
+                        resolve(documentosAnalizados);                      
+                      }
+                });
+            });
+          }
+        }
+      });
+    })
+  }
+
 router.post('/fileUpload', upload.array("uploads[]", 12), (req, res) => {
   res.send({'successful':'files uploaded succesfully'});
 });
-
   
 function getBotResponse(message) {
     var intent = '';
@@ -101,7 +140,6 @@ function getBotResponse(message) {
     }
   }
 }
-
 
 router.post('/processDocuments', (req, res) => {
   initDocumentProcessing(req.body.files);
@@ -126,19 +164,11 @@ function processDocument(data, documentName) {
           console.log('error:', err);
       else
           var words = [];
+          //console.log(response);
           response.keywords.forEach(keyword => words.push(keyword.text.toUpperCase()));
-          let newArticle = new Article({
-            name: documentName,
-            keywords: words
-          });
-          Article.addArticle(newArticle, (err, user) => {
-            if(err) {
-              console.log('Failed to save article');
-              new Error(ex.toString());
-            } else {
-              console.log('Article registered');
-            }
-          });
+          documentosAnalizados.push({'nombreDocumento': documentName, 'palabrasClaves':words});
+          console.log(documentosAnalizados);
+          //machetazo = true;
       });
 }
 

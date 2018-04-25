@@ -8,9 +8,12 @@
   },
   "dependencies": {
     "arxiv": "0.0.4",
+    "async": "^2.6.0",
     "bcryptjs": "*",
+    "bluebird": "^3.5.1",
     "body-parser": "*",
     "cors": "*",
+    "deasync": "^0.1.12",
     "express": "*",
     "jsonwebtoken": "*",
     "mongoose": "*",
@@ -18,6 +21,7 @@
     "nodemon": "^1.17.3",
     "passport": "*",
     "passport-jwt": "*",
+    "pdf2json": "^1.1.7",
     "watson-developer-cloud": "^3.2.1"
   },
   "author": "Pipe",

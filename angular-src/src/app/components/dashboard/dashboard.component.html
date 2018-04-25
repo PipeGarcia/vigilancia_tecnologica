@@ -10,8 +10,10 @@
     </div>
 </ng-container>
 
+<p>{{algo}}</p>
+
 <ol *ngIf="query && query.length > 0" class="list">
     <li *ngFor = "let q of query">
-        {{q}} <br>
+        {{q.nombreDocumento}} <br> {{q.palabrasClaves}}
     </li>
 </ol>
