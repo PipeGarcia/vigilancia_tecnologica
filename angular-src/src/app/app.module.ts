@@ -19,6 +19,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { ChatService } from './services/chat.service';
 import { UploadComponent } from './components/upload/upload.component';
 import { UploadService } from './services/upload.service';
+import { SpinnerComponentModule} from 'ng2-component-spinner';
 
 
 const appRoutes: Routes =  [
@@ -46,7 +47,8 @@ const appRoutes: Routes =  [
     FormsModule,
     HttpModule,
     RouterModule.forRoot(appRoutes),
-    FlashMessagesModule
+    FlashMessagesModule,
+    SpinnerComponentModule
   ],
   providers: [ValidateService, AuthService, AuthGuard, ChatService, UploadService],
   bootstrap: [AppComponent]

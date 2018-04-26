@@ -79273,6 +79273,134 @@ var AuthModule_1;
 
 /***/ }),
 
+/***/ "./node_modules/ng2-component-spinner/dist/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__("./node_modules/@angular/core/index.js");
+const common_1 = __webpack_require__("./node_modules/@angular/common/index.js");
+const spinner_component_1 = __webpack_require__("./node_modules/ng2-component-spinner/dist/src/spinner.component.js");
+__export(__webpack_require__("./node_modules/ng2-component-spinner/dist/src/spinner.component.js"));
+let SpinnerComponentModule = SpinnerComponentModule_1 = class SpinnerComponentModule {
+    static forRoot() {
+        return {
+            ngModule: SpinnerComponentModule_1,
+        };
+    }
+};
+SpinnerComponentModule = SpinnerComponentModule_1 = __decorate([
+    core_1.NgModule({
+        imports: [
+            common_1.CommonModule
+        ],
+        declarations: [
+            spinner_component_1.SpinnerComponent
+        ],
+        exports: [
+            spinner_component_1.SpinnerComponent
+        ]
+    })
+], SpinnerComponentModule);
+exports.SpinnerComponentModule = SpinnerComponentModule;
+var SpinnerComponentModule_1;
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/ng2-component-spinner/dist/src/spinner.component.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__("./node_modules/@angular/core/index.js");
+let SpinnerComponent = class SpinnerComponent {
+};
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Boolean)
+], SpinnerComponent.prototype, "spinnerShow", void 0);
+SpinnerComponent = __decorate([
+    core_1.Component({
+        selector: 'spinner-component',
+        template: `<div *ngIf="spinnerShow" class="sc-background"></div>
+  <div *ngIf="spinnerShow" [ngClass]="{'sc-default-spinner' : ref.children.length == 0 }"  class="sc-center">
+  <div #ref><ng-content></ng-content></div></div>`,
+        styles: [`
+        .sc-default-spinner {
+            width: 20px;
+            height: 20px;
+            background-color: orange;
+            -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
+            animation: sk-rotateplane 1.2s infinite ease-in-out;
+    }
+
+    @-webkit-keyframes sk-rotateplane {
+      0% { -webkit-transform: perspective(120px) }
+      50% { -webkit-transform: perspective(120px) rotateY(180deg) }
+      100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
+    }
+
+    @keyframes sk-rotateplane {
+      0% {
+        transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+        -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg)
+      } 50% {
+        transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+        -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg)
+      } 100% {
+        transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+        -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+      }
+    }
+
+    .sc-background{
+        content : "";
+        z-index: 1;
+        position: absolute;
+        top:0;
+        right:0;
+        left:0;
+        bottom: 0;
+        background-color: rgba(255,255,255,0.8);
+    }
+    .sc-center{
+      top: 50%;
+      margin: auto;
+      position: absolute;
+      left: 0;
+      right: 0;
+      z-index: 2;
+      transform: translatey(-50%);
+    }
+`]
+    })
+], SpinnerComponent);
+exports.SpinnerComponent = SpinnerComponent;
+//# sourceMappingURL=spinner.component.js.map
+
+/***/ }),
+
 /***/ "./node_modules/rxjs/_esm5/BehaviorSubject.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 

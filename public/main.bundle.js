@@ -90,6 +90,8 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_chat_service__ = __webpack_require__("./src/app/services/chat.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_upload_upload_component__ = __webpack_require__("./src/app/components/upload/upload.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__services_upload_service__ = __webpack_require__("./src/app/services/upload.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_ng2_component_spinner__ = __webpack_require__("./node_modules/ng2-component-spinner/dist/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_ng2_component_spinner___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19_ng2_component_spinner__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -99,6 +101,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -146,7 +149,8 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
                 __WEBPACK_IMPORTED_MODULE_3__angular_http__["HttpModule"],
                 __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* RouterModule */].forRoot(appRoutes),
-                __WEBPACK_IMPORTED_MODULE_14_angular2_flash_messages__["FlashMessagesModule"]
+                __WEBPACK_IMPORTED_MODULE_14_angular2_flash_messages__["FlashMessagesModule"],
+                __WEBPACK_IMPORTED_MODULE_19_ng2_component_spinner__["SpinnerComponentModule"]
             ],
             providers: [__WEBPACK_IMPORTED_MODULE_12__services_validate_service__["a" /* ValidateService */], __WEBPACK_IMPORTED_MODULE_13__services_auth_service__["a" /* AuthService */], __WEBPACK_IMPORTED_MODULE_15__guards_auth_guard__["a" /* AuthGuard */], __WEBPACK_IMPORTED_MODULE_16__services_chat_service__["a" /* ChatService */], __WEBPACK_IMPORTED_MODULE_18__services_upload_service__["a" /* UploadService */]],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_5__app_component__["a" /* AppComponent */]]
@@ -169,7 +173,7 @@ module.exports = ""
 /***/ "./src/app/components/dashboard/dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h2 class=\"page-header\">Vigtec</h2>\n<div class=\"center\">\n    <input [(ngModel)]=\"sentMessage\" type=\"text\">\n    <button (click)=\"initChat(sentMessage)\">Send your message</button>  \n</div>\n<ng-container *ngFor = \"let message of messages\">\n    <div class=\"message\" [ngClass]=\"{ 'from': message.sentBy === 'bot',\n                                        'to': message.sentBy === 'user'}\">\n    {{ message.content }}\n    </div>\n</ng-container>\n\n<p>{{algo}}</p>\n\n<ol *ngIf=\"query && query.length > 0\" class=\"list\">\n    <li *ngFor = \"let q of query\">\n        {{q.nombreDocumento}} <br> {{q.palabrasClaves}}\n    </li>\n</ol>"
+module.exports = "<h2 class=\"page-header\">Vigtec</h2>\n<div class=\"center\">\n    <input [(ngModel)]=\"sentMessage\" type=\"text\">\n    <button (click)=\"initChat(sentMessage)\">Send your message</button>  \n</div>\n<ng-container *ngFor = \"let message of messages\">\n    <div class=\"message\" [ngClass]=\"{ 'from': message.sentBy === 'bot',\n                                        'to': message.sentBy === 'user'}\">\n    {{ message.content }}\n    </div>\n</ng-container>\n\n<div style=\"position:relative; color:gray\">\n        <h2 *ngIf=\"showSpinner\">\n            Searching...\n        </h2>\n        <spinner-component [spinnerShow]=\"showSpinner\"></spinner-component>\n</div>\n\n<p>{{algo}}</p>\n\n<ol *ngIf=\"query && query.length > 0\" class=\"list\">\n    <li *ngFor = \"let q of query\">\n        {{q.nombreDocumento}} <br> {{q.palabrasClaves}}\n    </li>\n</ol>\n\n"
 
 /***/ }),
 
@@ -198,13 +202,16 @@ var DashboardComponent = (function () {
         this.sentMessage = '';
         this.receivedMessage = '';
         this.messages = [];
+        this.showSpinner = false;
     }
     DashboardComponent.prototype.ngOnInit = function () {
     };
     DashboardComponent.prototype.initChat = function (mensaje) {
         var _this = this;
+        this.showSpinner = true;
         var msg = { 'mensaje': mensaje };
         this.chatService.initChat(msg).subscribe(function (res) {
+            _this.showSpinner = false;
             _this.query = res.query;
             _this.algo = res.algo;
             _this.receivedMessage = res.botMessage;

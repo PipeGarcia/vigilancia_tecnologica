@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit {
   messages = [];
   query: any;
   algo: string;
+  showSpinner = false;
 
   constructor(private chatService: ChatService) { }
 
@@ -21,9 +22,11 @@ export class DashboardComponent implements OnInit {
   }
 
   initChat(mensaje) {
+    this.showSpinner = true;
     const msg = {'mensaje': mensaje};
     this.chatService.initChat(msg).subscribe(
       res => {
+        this.showSpinner = false;
         this.query = res.query;
         this.algo = res.algo;
         this.receivedMessage = res.botMessage;

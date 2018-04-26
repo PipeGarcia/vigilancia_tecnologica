@@ -10,6 +10,13 @@
     </div>
 </ng-container>
 
+<div style="position:relative; color:gray">
+        <h2 *ngIf="showSpinner">
+            Searching...
+        </h2>
+        <spinner-component [spinnerShow]="showSpinner"></spinner-component>
+</div>
+
 <p>{{algo}}</p>
 
 <ol *ngIf="query && query.length > 0" class="list">
@@ -17,3 +24,4 @@
         {{q.nombreDocumento}} <br> {{q.palabrasClaves}}
     </li>
 </ol>
+
