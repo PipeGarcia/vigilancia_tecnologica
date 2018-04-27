@@ -41,6 +41,7 @@ export class DashboardComponent implements OnInit {
   getDocumentsPerAnio(mensaje){
     this.query = [];
     this.showSpinner = true;
+    this.showStatistics = false;
     const msg = { 'mensaje': mensaje };
     this.chatService.getDocumentsPerAnio(msg).subscribe(
       res => {

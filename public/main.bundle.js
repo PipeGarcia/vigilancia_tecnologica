@@ -500,6 +500,7 @@ var DashboardComponent = (function () {
         var _this = this;
         this.query = [];
         this.showSpinner = true;
+        this.showStatistics = false;
         var msg = { 'mensaje': mensaje };
         this.chatService.getDocumentsPerAnio(msg).subscribe(function (res) {
             _this.showSpinner = false;
