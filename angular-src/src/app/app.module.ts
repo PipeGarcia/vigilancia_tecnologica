@@ -20,7 +20,8 @@ import { ChatService } from './services/chat.service';
 import { UploadComponent } from './components/upload/upload.component';
 import { UploadService } from './services/upload.service';
 import { SpinnerComponentModule} from 'ng2-component-spinner';
-
+import { StatisticsComponent } from './components/statistics/statistics.component';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 const appRoutes: Routes =  [
   {path: '', component: HomeComponent},
@@ -40,7 +41,8 @@ const appRoutes: Routes =  [
     HomeComponent,
     DashboardComponent,
     ProfileComponent,
-    UploadComponent
+    UploadComponent,
+    StatisticsComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +50,8 @@ const appRoutes: Routes =  [
     HttpModule,
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule,
-    SpinnerComponentModule
+    SpinnerComponentModule,
+    ChartsModule
   ],
   providers: [ValidateService, AuthService, AuthGuard, ChatService, UploadService],
   bootstrap: [AppComponent]

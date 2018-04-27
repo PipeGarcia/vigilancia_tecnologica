@@ -190,4 +190,47 @@ function getParameters(data) {
     }
 }
 
+router.post('/getDocsPerYear', (req, res) => {
+  docsPorAnio(req.body.mensaje).then(function (data) {
+    console.log(data);
+    res.send({    
+        'botMessage': getBotResponse(req.body.mensaje),    
+        'query': data,    
+        'algo': 'algo'    
+    })
+  });
+});
+
+function docsPorAnio(words) {
+  return new Promise(function (resolve, reject) {
+    search_query = {
+      all: words
+      //author: 'William Chan'
+    };
+    arxiv.search(search_query, function (err, results) {
+      var arreglo = [];
+      var contador = 0;
+      var numeroVeces = 0;
+      for (var a = 0; a < results.items.length; a++) {
+        var anio = results.items[contador].published.toString().substring(10, 15)
+        console.log(results.items[a].published.toString().substring(10, 15));
+        if (anio == results.items[a].published.toString().substring(10, 15)) {
+          numeroVeces = numeroVeces + 1;
+        } else {
+          arreglo.push({
+            'anio': anio,
+            'nroVeces': numeroVeces
+          });
+          contador = a;
+          numeroVeces = 0;
+        }
+        if(a == results.items.length-1) {
+          resolve(arreglo);
+        }
+      }
+      
+    });
+  })
+}
+
 module.exports = router;

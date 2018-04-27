@@ -15,6 +15,7 @@ export class DashboardComponent implements OnInit {
   query: any;
   algo: string;
   showSpinner = false;
+  showStatistics = false;
 
   constructor(private chatService: ChatService) { }
 
@@ -22,6 +23,7 @@ export class DashboardComponent implements OnInit {
   }
 
   initChat(mensaje) {
+    this.query = [];
     this.showSpinner = true;
     const msg = {'mensaje': mensaje};
     this.chatService.initChat(msg).subscribe(
@@ -33,6 +35,23 @@ export class DashboardComponent implements OnInit {
           this.messages.push({'sentBy': 'user', 'content': this.sentMessage},
             {'sentBy': 'bot', 'content': this.receivedMessage});
       }
+    );
+  }
+
+  getDocumentsPerAnio(mensaje){
+    this.query = [];
+    this.showSpinner = true;
+    const msg = { 'mensaje': mensaje };
+    this.chatService.getDocumentsPerAnio(msg).subscribe(
+      res => {
+        this.showSpinner = false;
+        this.query = res.query;
+        this.algo = res.algo;
+        this.receivedMessage = res.botMessage;
+        this.messages.push({'sentBy': 'user', 'content': this.sentMessage},
+          {'sentBy': 'bot', 'content': this.receivedMessage});
+        this.showStatistics = true;
+      }, error => { console.log('error'); }
     );
   }
 

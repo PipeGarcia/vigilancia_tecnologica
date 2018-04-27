@@ -11,4 +11,14 @@ export class ChatService {
     return this.http.post('/articles/initChatbot', message)
       .map(res => res.json());
   }
+
+  /*getDocumentList(message) {
+    return this.http.post('/articles/getDocumentList', message)
+      .map(res => res.json());
+  }*/
+
+  getDocumentsPerAnio(message) {
+    return this.http.post('/articles/getDocsPerYear', message)
+      .map(res => res.json());
+  }
 }
