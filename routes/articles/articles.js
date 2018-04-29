@@ -21,6 +21,7 @@ const folder = 'C:/Users/pipe-_000/Desktop/PI2/proyecto/angular-src/uploads/';
 var severalWords = false;
 
 var documentosAnalizados = [];
+var titles = [];
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -55,7 +56,8 @@ router.post('/initChatbot', (req, res) => {
     res.send(
       {    
         'botMessage': getBotResponse(req.body.mensaje),    
-        'query': documentosAnalizados,    
+        'query': documentosAnalizados,
+        'titles': titles,    
         'algo': 'algo'    
       }
     )
@@ -72,7 +74,7 @@ router.post('/initChatbot', (req, res) => {
 
         if(results.items.length != 0){
           for(var i=0; i<2; i++) {
-    
+            
             let pdfParser = new PDFParser(this, 1);
             var options = {
               url: results.items[i].links[1].href,
@@ -83,8 +85,11 @@ router.post('/initChatbot', (req, res) => {
             }
 
             console.log(options.url);
+            console.log(results.items[i].title);
+            console.log("i = " + i);
             request(options).pipe(pdfParser);
             var contenido;
+            
       
             pdfParser.on("pdfParser_dataError", errData => console.error(errData.parserError) );
             pdfParser.on("pdfParser_dataReady", pdfData => {
@@ -92,6 +97,7 @@ router.post('/initChatbot', (req, res) => {
                 contenido = pdfParser.getRawTextContent();
                 
                 var parameters = getParameters(contenido);
+                console.log("i = " + i);
                 natural_language_understanding.analyze(parameters, function(err, response) {
                   if (err)
                       console.log('error:', err);
@@ -99,6 +105,8 @@ router.post('/initChatbot', (req, res) => {
                       var words = [];
                       //console.log(response);
                       response.keywords.forEach(keyword => words.push(keyword.text.toUpperCase()));
+                      console.log("i = " + i);
+                      console.log("doc en i: " + results.items[i].title);
                       documentosAnalizados.push({
                         'nombreDocumento': results.items[i].title, 
                         'palabrasClaves':words
@@ -109,6 +117,11 @@ router.post('/initChatbot', (req, res) => {
                       }
                 });
             });
+            console.log(results.items[i].title);
+            titles.push({
+              'title': results.items[i].title
+            });
+            console.log("ii = " + i);
           }
         }
       });

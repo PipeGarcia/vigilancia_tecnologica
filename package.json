@@ -4,7 +4,11 @@
   "description": "Vigilancia Tecnologica con IA y PLN",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "serve": "nodemon app.js",
+    "build": "ng build",
+    "postinstall": "ng build --aot -prod"
   },
   "dependencies": {
     "arxiv": "0.0.4",

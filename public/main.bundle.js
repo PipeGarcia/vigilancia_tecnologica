@@ -449,7 +449,7 @@ module.exports = ""
 /***/ "./src/app/components/dashboard/dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h2 class=\"page-header\">Vigtec</h2>\n<div class=\"center\">\n    <input [(ngModel)]=\"sentMessage\" type=\"text\">\n    <button (click)=\"getDocumentsPerAnio(sentMessage)\">Send your message</button>  \n</div>\n<ng-container *ngFor = \"let message of messages\">\n    <div class=\"message\" [ngClass]=\"{ 'from': message.sentBy === 'bot',\n                                        'to': message.sentBy === 'user'}\">\n    {{ message.content }}\n    </div>\n</ng-container>\n\n<div style=\"position:relative; color:gray\">\n        <h2 *ngIf=\"showSpinner\">\n            Searching...\n        </h2>\n        <spinner-component [spinnerShow]=\"showSpinner\"></spinner-component>\n</div>\n\n<p>{{algo}}</p>\n\n<!-- <ol *ngIf=\"query && query.length > 0\" class=\"list\">\n    <li *ngFor = \"let q of query\">\n        {{q.nombreDocumento}} <br> {{q.palabrasClaves}}\n    </li>\n</ol> -->\n\n<app-statistics [list]=\"query\" *ngIf=\"showStatistics\"></app-statistics>\n\n"
+module.exports = "<h2 class=\"page-header\">Vigtec</h2>\n<div class=\"center\">\n    <input [(ngModel)]=\"sentMessage\" type=\"text\">\n    <button (click)=\"initChat(sentMessage)\">Send your message</button>  \n</div>\n<ng-container *ngFor = \"let message of messages\">\n    <div class=\"message\" [ngClass]=\"{ 'from': message.sentBy === 'bot',\n                                        'to': message.sentBy === 'user'}\">\n    {{ message.content }}\n    </div>\n</ng-container>\n\n<div style=\"position:relative; color:gray\">\n        <h2 *ngIf=\"showSpinner\">\n            Searching...\n        </h2>\n        <spinner-component [spinnerShow]=\"showSpinner\"></spinner-component>\n</div>\n\n<p>{{algo}}</p>\n\n<ol *ngIf=\"query && query.length > 0\" class=\"list\">\n    <li *ngFor = \"let q of query\">\n        {{q.nombreDocumento}} <br> {{q.palabrasClaves}}\n    </li>\n</ol>\n\n<!--<app-statistics [list]=\"query\" *ngIf=\"showStatistics\"></app-statistics>-->\n\n"
 
 /***/ }),
 
@@ -485,11 +485,13 @@ var DashboardComponent = (function () {
     };
     DashboardComponent.prototype.initChat = function (mensaje) {
         var _this = this;
+        this.titles = [];
         this.query = [];
         this.showSpinner = true;
         var msg = { 'mensaje': mensaje };
         this.chatService.initChat(msg).subscribe(function (res) {
             _this.showSpinner = false;
+            _this.titles = res.titles;
             _this.query = res.query;
             _this.algo = res.algo;
             _this.receivedMessage = res.botMessage;
