@@ -2,6 +2,7 @@
   "name": "proyecto",
   "version": "1.0.0",
   "description": "Vigilancia Tecnologica con IA y PLN",
+  "angular-cli": {},
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -32,7 +33,23 @@
     "passport": "*",
     "passport-jwt": "*",
     "pdf2json": "^1.1.7",
-    "watson-developer-cloud": "^3.2.1"
+    "watson-developer-cloud": "^3.2.1",
+    "@angular/common": "^2.3.1",
+    "@angular/compiler": "^2.3.1",
+    "@angular/core": "^2.3.1",
+    "@angular/forms": "^2.3.1",
+    "@angular/http": "^2.3.1",
+    "@angular/platform-browser": "^2.3.1",
+    "@angular/platform-browser-dynamic": "^2.3.1",
+    "@angular/router": "^3.3.1",
+    "angular2-flash-messages": "^1.0.5",
+    "angular2-jwt": "^0.2.3",
+    "chart.js": "^2.7.2",
+    "core-js": "^2.4.1",
+    "ng2-charts": "^1.6.0",
+    "rxjs": "^5.0.1",
+    "ts-helpers": "^1.1.1",
+    "zone.js": "^0.7.2"
   },
   "engines": {
     "node": "8.11.1",
@@ -41,6 +58,22 @@
   "author": "Pipe",
   "license": "ISC",
   "devDependencies": {
-    "enhanced-resolve": "^3.3.0"
+    "enhanced-resolve": "^3.3.0",
+    "@angular/cli": "^1.7.3",
+    "@angular/compiler-cli": "^2.3.1",
+    "@types/jasmine": "2.5.38",
+    "@types/node": "^6.0.42",
+    "codelyzer": "~2.0.0-beta.1",
+    "jasmine-core": "2.5.2",
+    "jasmine-spec-reporter": "2.5.0",
+    "karma": "1.2.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-cli": "^1.0.1",
+    "karma-jasmine": "^1.0.2",
+    "karma-remap-istanbul": "^0.2.1",
+    "protractor": "~4.0.13",
+    "ts-node": "1.2.1",
+    "tslint": "^4.3.0",
+    "typescript": "~2.0.3"
   }
 }
