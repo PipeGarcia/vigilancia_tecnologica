@@ -7,8 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
     "serve": "nodemon app.js",
-    "build": "sudo ng build",
-    "postinstall": "sudo ng build --aot -prod"
+    "ng": "ng",
+    "build": "ng build",
+    "e2e": "protractor",
+    "postinstall": "ng build --aot -prod"
   },
   "dependencies": {
     "typescript": "~2.0.3",
