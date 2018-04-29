@@ -29,6 +29,10 @@
     "pdf2json": "^1.1.7",
     "watson-developer-cloud": "^3.2.1"
   },
+  "engines": {
+    "node":"8.11.1",
+    "npm": "5.8.0"
+  },
   "author": "Pipe",
   "license": "ISC"
 }
