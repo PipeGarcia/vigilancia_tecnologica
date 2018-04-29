@@ -8,7 +8,7 @@
     "start": "node app.js",
     "serve": "nodemon app.js",
     "build": "ng build",
-    "postinstall": "ng build"
+    "postinstall": "ng build --aot -prod"
   },
   "dependencies": {
     "typescript": "~2.0.3",
@@ -39,8 +39,6 @@
   "author": "Pipe",
   "license": "ISC",
   "devDependencies": {
-    "@angular/cli": "^1.7.4",
-    "@angular/compiler-cli": "^5.2.10",
     "enhanced-resolve": "^3.3.0"
   }
 }
